@@ -1,4 +1,5 @@
-# Install-Java
+# Installs the Java Runtime Environment (JRE) for Windows 64 Bit
+
 # Elevate to administrator if necessary
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 {
@@ -7,19 +8,23 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   exit
 }
 
+# Default download URL - correct as of 2020-05-18
 $DownloadUrl = "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=242060_3d5a2bb8f8d4428bbe94aed7ec7ae784"
 
+# Attempts to grab the latest download URL from the manual downloads page
 $Site = Invoke-WebRequest -UseBasicParsing "https://www.java.com/en/download/manual.jsp"
 foreach($Link in $Site.links)
 {
     if($Link.title -match "Download Java software for Windows \(64-bit\)")
     {
         $FileName = $Link.innerHTML
-        Write-Output "Correct: $($Link.href)"
+        Write-Output "Found an up-to-date download link: $($Link.href)"
         $DownloadUrl = $Link.href
         break
     }
 }
+
+
 $FileName = "jre.exe"
 $OutPath = "$($env:USERPROFILE)\Desktop\$($FileName)"
 
