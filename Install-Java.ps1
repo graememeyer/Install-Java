@@ -28,6 +28,7 @@ $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest $DownloadUrl -UseBasicParsing -OutFile $OutPath
 Write-Host "Wrote file to $($OutPath)"
 
+Write-Host "Installing the Java Runtime Environment. This can take a few minutes. Please stand by..."
 Start-Process $OutPath '/s REBOOT=0 SPONSORS=0 AUTO_UPDATE=0' -wait
 Write-Output $?
-Read-Host "Complete. Press any key to exit"
+Read-Host "Installation complete. Enter any key to exit"
